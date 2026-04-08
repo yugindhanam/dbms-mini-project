@@ -1,0 +1,301 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#1D9E75;--green-light:#E1F5EE;--green-dark:#0F6E56;--red:#E24B4A;--red-light:#FCEBEB;--amber:#BA7517;--amber-light:#FAEEDA;--blue-light:#E6F1FB;--blue-dark:#0C447C;--text:#2C2C2A;--text2:#5F5E5A;--text3:#888780;--bg:#F1EFE8;--border:#D3D1C7}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar{background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column}
+.brand{padding:22px 18px 18px;border-bottom:1px solid var(--border)}
+.brand-icon{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.brand-icon svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2}
+.brand h1{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:-.5px}
+.brand p{font-size:11px;color:var(--text3);margin-top:2px}
+.nav{padding:14px 10px;flex:1}
+.nav-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:6px 8px 4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;margin-bottom:2px}
+.nav-item:hover{background:var(--bg)}
+.nav-item.active{background:var(--green-light);color:var(--green-dark);font-weight:500}
+.nav-item svg{width:15px;height:15px;flex-shrink:0}
+.sidebar-footer{padding:14px 18px;border-top:1px solid var(--border);font-size:12px;color:var(--text3);display:flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.main{display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between}
+.topbar h2{font-size:15px;font-weight:500}
+.badge{font-family:'Space Mono',monospace;font-size:11px;background:var(--green-light);color:var(--green-dark);padding:3px 10px;border-radius:20px;font-weight:700}
+.content{padding:22px 24px;flex:1;overflow-y:auto}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:#fff;border-radius:10px;border:0.5px solid var(--border);padding:14px 16px}
+.stat-label{font-size:11px;color:var(--text3);margin-bottom:5px}
+.stat-val{font-size:20px;font-weight:500;font-family:'Space Mono',monospace}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:3px}
+.stat.g .stat-val{color:var(--green-dark)}
+.stat.r .stat-val{color:var(--red)}
+.stat.a .stat-val{color:var(--amber)}
+.two-col{display:grid;grid-template-columns:280px 1fr;gap:14px}
+.card{background:#fff;border-radius:10px;border:0.5px solid var(--border);overflow:hidden}
+.card-head{padding:12px 16px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-head h3{font-size:13px;font-weight:500}
+.card-body{padding:16px}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:500}
+.fg input,.fg select{width:100%;padding:8px 11px;border-radius:7px;border:0.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:#fff;outline:none;transition:border .15s}
+.fg input:focus,.fg select:focus{border-color:var(--green)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 14px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--border);transition:all .15s;width:100%;margin-bottom:7px}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-primary:hover{background:var(--green-dark)}
+.btn-ghost{background:transparent;color:var(--text2)}
+.btn-ghost:hover{background:var(--bg)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;padding:9px 12px;background:var(--bg);border-bottom:0.5px solid var(--border)}
+td{padding:10px 12px;border-bottom:0.5px solid var(--border);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf9}
+.pill{display:inline-flex;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px}
+.pg{background:var(--green-light);color:var(--green-dark)}
+.pd{background:var(--blue-light);color:var(--blue-dark)}
+.pb{background:var(--amber-light);color:var(--amber)}
+.qty-low{color:var(--red);font-weight:600}
+.qty-ok{color:var(--green-dark)}
+.acts{display:flex;gap:5px}
+.abtn{padding:4px 9px;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;border:0.5px solid var(--border);background:transparent;color:var(--text2);transition:all .15s;white-space:nowrap}
+.abtn:hover{background:var(--red-light);color:var(--red);border-color:#F7C1C1}
+.abtn.upd:hover{background:var(--green-light);color:var(--green-dark);border-color:#9FE1CB}
+.qty-edit{width:60px;padding:3px 7px;border-radius:6px;border:0.5px solid var(--green);font-size:12px;font-family:'Space Mono',monospace;text-align:center;outline:none}
+.inline-edit{display:flex;align-items:center;gap:5px}
+.toast{position:fixed;bottom:20px;right:20px;background:#2C2C2A;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;display:none;z-index:99}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{background:var(--red-light);color:var(--red);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;border:0.5px solid #F7C1C1}
+.empty{padding:36px;text-align:center;color:var(--text3);font-size:13px}
+</style>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <h1>EMart IMS</h1>
+      <p>Inventory Management</p>
+    </div>
+    <nav class="nav">
+      <div class="nav-label">Manage</div>
+      <div class="nav-item active" onclick="setTab('products',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Products
+      </div>
+      <div class="nav-item" onclick="setTab('suppliers',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Suppliers
+      </div>
+      <div class="nav-item" onclick="setTab('orders',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>Orders
+      </div>
+    </nav>
+    <div class="sidebar-footer"><div class="dot" id="db-dot"></div><span id="db-status">Connecting...</span></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <h2 id="page-title">Products</h2>
+      <span class="badge" id="rec-count">— items</span>
+    </div>
+    <div class="content" id="content-area"><div style="padding:40px;text-align:center"><div class="spinner"></div></div></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const API='http://localhost:5000';
+async function api(path,opts={}){
+  const r=await fetch(API+path,{headers:{'Content-Type':'application/json'},...opts});
+  if(!r.ok)throw new Error(await r.text());
+  return r.json();
+}
+function toast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=ok?'#0F6E56':'#A32D2D';
+  t.style.display='block';setTimeout(()=>t.style.display='none',2500);
+}
+function setTab(tab,el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('page-title').textContent={products:'Products',suppliers:'Suppliers',orders:'Orders'}[tab];
+  ({products:renderProducts,suppliers:renderSuppliers,orders:renderOrders})[tab]();
+}
+function pill(c){
+  const m={Grocery:'pg',Dairy:'pd',Beverage:'pb'};
+  return `<span class="pill ${m[c]||'pg'}">${c}</span>`;
+}
+function loading(){document.getElementById('content-area').innerHTML='<div style="padding:40px;text-align:center"><div class="spinner"></div></div>';}
+
+async function renderProducts(){
+  loading();
+  let products;
+  try{
+    products=await api('/products');
+    document.getElementById('db-dot').style.background='var(--green)';
+    document.getElementById('db-status').textContent='XEPDB1 · live';
+  }catch(e){
+    document.getElementById('db-dot').style.background='var(--red)';
+    document.getElementById('db-status').textContent='DB offline';
+    document.getElementById('content-area').innerHTML=`<div class="err">Cannot reach Flask at ${API} — make sure your server is running.</div>`;
+    return;
+  }
+  document.getElementById('rec-count').textContent=products.length+' items';
+  const avg=products.length?Math.round(products.reduce((a,p)=>a+p.price,0)/products.length):0;
+  const low=products.filter(p=>p.quantity<60).length;
+  const total=products.reduce((a,p)=>a+p.quantity,0);
+  document.getElementById('content-area').innerHTML=`
+    <div class="stats">
+      <div class="stat g"><div class="stat-label">Total Products</div><div class="stat-val">${products.length}</div><div class="stat-sub">all categories</div></div>
+      <div class="stat"><div class="stat-label">Total Stock</div><div class="stat-val">${total}</div><div class="stat-sub">units in inventory</div></div>
+      <div class="stat a"><div class="stat-label">Avg Price</div><div class="stat-val">₹${avg}</div><div class="stat-sub">per product</div></div>
+      <div class="stat r"><div class="stat-label">Low Stock</div><div class="stat-val">${low}</div><div class="stat-sub">below 60 units</div></div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h3>Add Product</h3></div>
+        <div class="card-body">
+          <div class="fg"><label>Product ID</label><input id="f-id" type="number" placeholder="e.g. 106"></div>
+          <div class="fg"><label>Product Name</label><input id="f-name" placeholder="e.g. Coffee"></div>
+          <div class="frow">
+            <div class="fg"><label>Category</label><select id="f-cat"><option>Grocery</option><option>Dairy</option><option>Beverage</option><option>Other</option></select></div>
+            <div class="fg"><label>Supplier ID</label><input id="f-sup" type="number" placeholder="1 or 2"></div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label>Price (₹)</label><input id="f-price" type="number" placeholder="0"></div>
+            <div class="fg"><label>Quantity</label><input id="f-qty" type="number" placeholder="0"></div>
+          </div>
+          <button class="btn btn-primary" onclick="addProduct()">+ Add Product</button>
+          <button class="btn btn-ghost" onclick="['f-id','f-name','f-price','f-qty','f-sup'].forEach(i=>document.getElementById(i).value='')">Clear</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Product List</h3><span style="font-size:11px;color:var(--text3)">${products.length} records · Oracle DB</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead>
+          <tbody>${products.length?products.map(p=>`
+            <tr id="row-${p.id}">
+              <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">${p.id}</td>
+              <td style="font-weight:500">${p.name}</td>
+              <td>${pill(p.category)}</td>
+              <td>₹${p.price}</td>
+              <td class="${p.quantity<60?'qty-low':'qty-ok'}" id="qty-${p.id}">${p.quantity}</td>
+              <td>
+                <div class="acts">
+                  <div class="inline-edit" id="edit-${p.id}" style="display:none">
+                    <input class="qty-edit" id="qin-${p.id}" type="number" value="${p.quantity}">
+                    <button class="abtn upd" onclick="saveQty(${p.id})">Save</button>
+                    <button class="abtn" onclick="cancelEdit(${p.id})">✕</button>
+                  </div>
+                  <button class="abtn upd" id="ebtn-${p.id}" onclick="startEdit(${p.id},${p.quantity})">+ Stock</button>
+                  <button class="abtn" onclick="deleteProduct(${p.id},'${p.name}')">Delete</button>
+                </div>
+              </td>
+            </tr>`).join(''):'<tr><td colspan="6"><div class="empty">No products in DB</div></td></tr>'}
+          </tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function startEdit(id,qty){
+  document.getElementById('edit-'+id).style.display='flex';
+  document.getElementById('ebtn-'+id).style.display='none';
+  document.getElementById('qin-'+id).value=qty;
+  document.getElementById('qin-'+id).focus();
+}
+function cancelEdit(id){
+  document.getElementById('edit-'+id).style.display='none';
+  document.getElementById('ebtn-'+id).style.display='inline-flex';
+}
+async function saveQty(id){
+  const newQty=parseInt(document.getElementById('qin-'+id).value);
+  if(isNaN(newQty)||newQty<0){toast('Invalid quantity',false);return;}
+  try{
+    await api('/products/'+id+'/quantity',{method:'PUT',body:JSON.stringify({quantity:newQty})});
+    toast('Stock updated in Oracle DB');
+    renderProducts();
+  }catch(e){toast('Error: '+e.message,false);}
+}
+async function addProduct(){
+  const id=parseInt(document.getElementById('f-id').value);
+  const name=document.getElementById('f-name').value.trim();
+  const category=document.getElementById('f-cat').value;
+  const price=parseFloat(document.getElementById('f-price').value);
+  const quantity=parseInt(document.getElementById('f-qty').value);
+  const supplier=parseInt(document.getElementById('f-sup').value);
+  if(!id||!name||!price||!quantity||!supplier){toast('Please fill all fields',false);return;}
+  try{
+    await api('/products',{method:'POST',body:JSON.stringify({id,name,category,price,quantity,supplier})});
+    toast('"'+name+'" added to Oracle DB');
+    renderProducts();
+  }catch(e){toast('Error: '+e.message,false);}
+}
+async function deleteProduct(id,name){
+  if(!confirm('Delete "'+name+'" from the database?'))return;
+  try{
+    await api('/products/'+id,{method:'DELETE'});
+    toast('"'+name+'" deleted from Oracle DB');
+    renderProducts();
+  }catch(e){toast('Error: '+e.message,false);}
+}
+
+async function renderSuppliers(){
+  loading();
+  try{
+    const suppliers=await api('/suppliers');
+    document.getElementById('rec-count').textContent=suppliers.length+' suppliers';
+    document.getElementById('content-area').innerHTML=`
+      <div class="card" style="max-width:680px">
+        <div class="card-head"><h3>Supplier List</h3><span style="font-size:11px;color:var(--text3)">${suppliers.length} records · Oracle DB</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>ID</th><th>Supplier Name</th><th>Phone</th><th>Address</th></tr></thead>
+          <tbody>${suppliers.map(s=>`
+            <tr>
+              <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">${s.id}</td>
+              <td style="font-weight:500">${s.name}</td>
+              <td>${s.phone}</td>
+              <td>${s.address}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table></div>
+      </div>`;
+  }catch(e){
+    document.getElementById('content-area').innerHTML=`<div class="err">Failed to load suppliers — check your Flask /suppliers route. Error: ${e.message}</div>`;
+  }
+}
+
+async function renderOrders(){
+  loading();
+  try{
+    const orders=await api('/orders');
+    document.getElementById('rec-count').textContent=orders.length+' orders';
+    const rev=orders.reduce((a,o)=>a+o.total,0);
+    document.getElementById('content-area').innerHTML=`
+      <div class="stats" style="grid-template-columns:repeat(3,1fr);max-width:560px">
+        <div class="stat g"><div class="stat-label">Total Orders</div><div class="stat-val">${orders.length}</div></div>
+        <div class="stat"><div class="stat-label">Revenue</div><div class="stat-val">₹${rev}</div></div>
+        <div class="stat a"><div class="stat-label">Avg Order</div><div class="stat-val">₹${orders.length?Math.round(rev/orders.length):0}</div></div>
+      </div>
+      <div class="card" style="max-width:680px">
+        <div class="card-head"><h3>Order History</h3><span style="font-size:11px;color:var(--text3)">${orders.length} records · Oracle DB</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Order ID</th><th>Customer ID</th><th>Date</th><th>Total</th></tr></thead>
+          <tbody>${orders.map(o=>`
+            <tr>
+              <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">#${o.id}</td>
+              <td>${o.customer_id}</td>
+              <td style="color:var(--text3)">${o.date}</td>
+              <td style="font-weight:500;color:var(--green-dark)">₹${o.total}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table></div>
+      </div>`;
+  }catch(e){
+    document.getElementById('content-area').innerHTML=`<div class="err">Failed to load orders. Error: ${e.message}</div>`;
+  }
+}
+
+renderProducts();
+</script>
